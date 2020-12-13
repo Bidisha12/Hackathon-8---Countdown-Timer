@@ -1,20 +1,65 @@
-import React, { Component, useState, useEffect } from "react";
+import React, {Component, useState, useEffect} from 'react';
 import '../styles/App.css';
 
 const App = () => {
-  // write your code here 
+  const [secs, setSecs] = useState('');
+  const [time, setTime] = useState('');
 
+  const nextKey = (event) => {
+    console.log(event.keyCode);
+    if (event.keyCode === 13) {
+      stopTimer();
+      if (event.target.value >= 0) setSecs(event.target.value);
+      else setSecs(0);
+      return;
+    }
+  };
+  const timer = () => {
+    const m = setTimeout((event) => setSecs(secs - 1), 1 * 1000);
+    setTime(m);
+  };
+  const stopTimer = () => {
+    console.log(time, 'time');
+    setTime('');
+  };
+
+  useEffect(() => {
+    console.log(time);
+    window.addEventListener('keydown', keyPressHandler);
+    if (secs > 0) timer();
+    else stopTimer();
+    return () => {
+      window.removeEventListener('keydown', keyPressHandler);
+    };
+  }, [secs]);
+
+  const keyPressHandler = (event) => {
+    if (event.keyCode === 13) {
+      if (event.target.value >= 0) {
+        setSecs(Math.floor(event.target.value));
+      } else {
+        console.log(event.target.value, ' entered!');
+        setTime('');
+        return;
+      }
+    }
+  };
   return (
     <div className="wrapper">
       <div id="whole-center">
         <h1>
-          Reverse countdown for<input id="timeCount" onKeyDown={/* callback function */} /> sec.
+          Reverse countdown for
+          <input
+            type="number"
+            id="timeCount"
+            onKeyDown={keyPressHandler}
+          />{' '}
+          sec.
         </h1>
       </div>
-      <div id="current-time">{/* remaining time */}</div>
+      <div id="current-time">{secs}</div>
     </div>
-  )
-}
-
+  );
+};
 
 export default App;
