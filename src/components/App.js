@@ -2,19 +2,20 @@ import React, { Component, useState, useEffect } from 'react';
 import '../styles/App.css';
 
 const App = () => {
+  // write your code here
   const [timer, setTimer] = useState(0);
-  const keyPressHandler = (event) => {
-    if (event.key === 'Enter') {
+  const setTimeout1 = (event) => {
+    if (event.key === "Enter") {
       const temp = Math.floor(Number(event.target.value));
       if (temp) {
-        setTimer = temp;
-      }
-      else {
-        setTimer = 0;
+        setTimer(temp);
+      } else {
+        setTimer(0);
       }
     }
-  }
-  useEffect(()=>{
+  };
+
+  useEffect(() => {
     const timerId = setTimeout(() => {
       if (timer > 0) {
         setTimer(timer - 1);
@@ -23,7 +24,7 @@ const App = () => {
     return () => {
       clearTimeout(timerId);
     };
-  }); 
+  });
 
   return (
     <div className="wrapper">
@@ -31,10 +32,9 @@ const App = () => {
         <h1>
           Reverse countdown for
           <input
-            type="number"
             id="timeCount"
-            onKeyDown={keyPressHandler}
-          />{' '}
+            onKeyDown={setTimeout1}
+          />{" "}
           sec.
         </h1>
       </div>
