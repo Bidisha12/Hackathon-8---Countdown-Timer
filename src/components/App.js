@@ -9,7 +9,7 @@ const App = () => {
     console.log(event.keyCode);
     if (event.keyCode === 13) {
       stopTimer();
-      if (event.target.value >= 0) setSecs(event.target.value);
+      if (Number(event.target.value) >= 0) setSecs(Number(event.target.value));
       else setSecs(0);
       return;
     }
@@ -35,10 +35,10 @@ const App = () => {
 
   const keyPressHandler = (event) => {
     if (event.keyCode === 13) {
-      if (event.target.value >= 0) {
-        setSecs(Math.floor(event.target.value));
+      if (Number(event.target.value) >= 0) {
+        setSecs(Math.floor(Number(event.target.value)));
       } else {
-        console.log(event.target.value, ' entered!');
+        console.log(Number(event.target.value)), ' entered!');
         setTime('');
         return;
       }
